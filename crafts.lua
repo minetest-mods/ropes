@@ -1,14 +1,16 @@
-minetest.register_craft({
-  output = 'vines:rope_block',
-  recipe = vines.recipes['rope_block']
-})
+-- Misc
 
 minetest.register_craft({
-  output = 'vines:shears',
-  recipe = vines.recipes['shears']
+	output =  'vines:ropesegment',
+	recipe = {
+		{'farming:cotton',},
+		{'farming:cotton',},
+		{'farming:cotton'}
+	}
 })
 
-minetest.register_craftitem("vines:vines", {
-  description = "Vines",
+minetest.register_craftitem("vines:ropesegment", {
+  description = "Rope",
+  groups = {vines = 1},
   inventory_image = "vines_item.png",
 })

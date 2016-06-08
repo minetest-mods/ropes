@@ -1,9 +1,10 @@
 # Vines
 
 ## Features
-- Rope block for spawning rope that slowly drops into the deep.
+- Rope blocks for spawning rope that slowly drops into the deep.
+- Rope ladder that similarly descends into the deep.
 - Vines are climbable and slowly grow downward.
-- Shears that allow the collecting of vines.
+- Shears that allow the collecting of vines and the trimming of ropes
 - Spawns vines on jungletree leaves.
 - Roots on the bottom of dirt and dirt with grass nodes.
 - Spawns vines on trees located in swampy area.
