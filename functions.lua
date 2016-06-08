@@ -33,7 +33,7 @@ vines.register_vine = function( name, defs, biome )
     paramtype = "light",
     paramtype2 = "wallmounted",
     buildable_to = true,
-    tile_images = { vine_image_end },
+    tiles = { vine_image_end },
     drawtype = drawtype,
     inventory_image = vine_image_end,
     groups = groups,
@@ -71,7 +71,7 @@ vines.register_vine = function( name, defs, biome )
     paramtype = "light",
     paramtype2 = "wallmounted",
     buildable_to = true,
-    tile_images = { vine_image_middle },
+    tiles = { vine_image_middle },
     wield_image = vine_image_middle,
     drawtype = drawtype,
     inventory_image = vine_image_middle,
@@ -94,7 +94,7 @@ vines.register_vine = function( name, defs, biome )
   biome_lib:spawn_on_surfaces( biome )
 
   local override_nodes = function( nodes, defs )
-    function override( index, registered )
+    local function override( index, registered )
       local node = nodes[ index ]
       if index > #nodes then return registered end
       if minetest.registered_nodes[node] then
@@ -129,4 +129,46 @@ vines.dig_vine = function( pos, node_name, user )
       inv:add_item("main", ItemStack( node_name ))
     end
   end
+end
+
+local c_air = minetest.get_content_id("air")
+
+vines.destroy_rope_starting = function( p, targetnode, bottomnode, topnode )
+	local n = minetest.get_node(p).name
+	if n ~= targetnode and n ~= bottomnode then
+		return
+	end
+	local y1 = p.y
+	local tab = {}
+	local i = 1
+	while n == targetnode do
+		tab[i] = p
+		i = i+1
+		p.y = p.y-1
+		n = minetest.get_node(p).name
+	end
+	if n == bottomnode then
+		tab[i] = p
+	end
+	local y0 = p.y
+
+	local manip = minetest.get_voxel_manip()
+	local p0 = {x=p.x, y=y0, z=p.z}
+	local p1 = {x=p.x, y=y0+1, z=p.z}
+	local p2 = {x=p.x, y=y1, z=p.z}
+	local pos1, pos2 = manip:read_from_map(p0, p2)
+	area = VoxelArea:new({MinEdge=pos1, MaxEdge=pos2})
+	nodes = manip:get_data()
+
+	for i in area:iterp(p1, p2) do
+		nodes[i] = c_air
+	end
+	nodes[area:indexp(p0)] = minetest.get_content_id(topnode)
+
+	manip:set_data(nodes)
+	manip:write_to_map()
+	manip:update_map() -- <— this takes time
+	
+    local timer = minetest.get_node_timer( p0 )
+    timer:start( 1 )
 end

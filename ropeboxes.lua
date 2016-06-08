@@ -1,8 +1,6 @@
-local ropeLength = 100
-
 local function register_rope_block(multiple, pixels)
 	minetest.register_node(string.format("vines:%irope_block", multiple), {
-	description = string.format("Rope %im", ropeLength*multiple),
+	description = string.format("Rope %im", vines.ropeLength*multiple),
 	drawtype="nodebox",
 	sunlight_propagates = true,
 	paramtype = "light",
@@ -36,15 +34,12 @@ local function register_rope_block(multiple, pixels)
 		if n.name == "air" then
 		minetest.add_node(p, {name="vines:rope_bottom"})
 		local meta = minetest.get_meta(p)
-		meta:set_int("length_remaining", ropeLength*multiple)
+		meta:set_int("length_remaining", vines.ropeLength*multiple)
 		end
 	end,
-	after_dig_node = function(pos, node, digger)
+	after_destruct = function(pos)
 		local p = {x=pos.x, y=pos.y-1, z=pos.z}
-		local n = minetest.get_node(p)
-		if (n.name == 'vines:rope' or n.name == 'vines:rope_bottom' ) then
-		minetest.add_node(p, {name="vines:rope_top"})
-		end
+		vines.destroy_rope_starting(p, 'vines:rope', 'vines:rope_bottom', 'vines:rope_top')
 	end
 	})
 	
@@ -93,7 +88,7 @@ minetest.register_node("vines:rope", {
   sunlight_propagates = true,
   paramtype = "light",
   drop = "",
-  tile_images = { "vines_rope.png" },
+  tiles = { "vines_rope.png" },
   drawtype = "plantlike",
   groups = {flammable=2, not_in_creative_inventory=1},
   sounds =  default.node_sound_leaves_defaults(),
@@ -110,7 +105,7 @@ minetest.register_node("vines:rope_bottom", {
   sunlight_propagates = true,
   paramtype = "light",
   drop = "",
-  tile_images = { "vines_rope_bottom.png" },
+  tiles = { "vines_rope_bottom.png" },
   drawtype = "plantlike",
   groups = {flammable=2, not_in_creative_inventory=1},
   sounds =  default.node_sound_leaves_defaults(),
@@ -147,7 +142,7 @@ minetest.register_node("vines:rope_top", {
   sunlight_propagates = true,
   paramtype = "light",
   drop = "",
-  tile_images = { "vines_rope_top.png" },
+  tiles = { "vines_rope_top.png" },
   drawtype = "plantlike",
   groups = {not_in_creative_inventory=1},
   sounds =  default.node_sound_leaves_defaults(),
@@ -162,10 +157,9 @@ minetest.register_node("vines:rope_top", {
   on_timer = function( pos, elapsed )
     local p = {x=pos.x, y=pos.y-1, z=pos.z}
     local n = minetest.get_node(p)
-    if  (n.name == 'vines:rope' or n.name == 'vines:rope_bottom') then
-	  minetest.add_node(p, {name="vines:rope_top"})
-	end
+
 	if (n.name ~= "ignore") then
+		vines.destroy_rope_starting(p, 'vines:rope', 'vines:rope_bottom', 'vines:rope_top')
 		minetest.set_node(pos, {name="air"})
 	else
 	    local timer = minetest.get_node_timer( pos )

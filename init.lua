@@ -1,20 +1,15 @@
 vines = {
   name = 'vines',
-  recipes = {}
+  ropeLadderLength = 50,
+  ropeLength = 50,
 }
 
-local enableVines = true
-
-if enableVines then
-	dofile( minetest.get_modpath( vines.name ) .. "/functions.lua" )
-end
+dofile( minetest.get_modpath( vines.name ) .. "/functions.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/aliases.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/crafts.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/ropeboxes.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/ladder.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/shear.lua" )
-if enableVines then
-	dofile( minetest.get_modpath( vines.name ) .. "/vines.lua" )
-end
+dofile( minetest.get_modpath( vines.name ) .. "/vines.lua" )
 
 print("[Vines] Loaded!")

@@ -1,5 +1,3 @@
-local ropeLadderLength = 50
-
 minetest.register_node("vines:ropeladder_top", {
 	description = "Rope ladder",
 	drawtype = "signlike",
@@ -11,6 +9,7 @@ minetest.register_node("vines:ropeladder_top", {
 	paramtype2 = "wallmounted",
 	walkable = false,
 	climbable = true,
+	sunlight_propagates = true,
 	selection_box = {
 		type = "wallmounted",
 		--wall_top = = <default>
@@ -30,15 +29,12 @@ minetest.register_node("vines:ropeladder_top", {
 		if n.name == "air" and o.param2 > 1 then
 			minetest.add_node(p, {name="vines:ropeladder_bottom", param2=o.param2})
 			local meta = minetest.get_meta(p)
-			meta:set_int("length_remaining", ropeLadderLength)
+			meta:set_int("length_remaining", vines.ropeLadderLength)
 		end
 	end,
-	after_dig_node = function(pos, node, digger)
+	after_destruct = function(pos)
 		local p = {x=pos.x, y=pos.y-1, z=pos.z}
-		local n = minetest.get_node(p)
-		if (n.name == 'vines:ropeladder' or n.name == 'vines:ropeladder_bottom' ) then
-			minetest.add_node(p, {name="vines:ropeladder_falling", param2=n.param2})
-		end
+		vines.destroy_rope_starting(p, 'vines:ropeladder', 'vines:ropeladder_bottom', 'vines:ropeladder_falling')
 	end
 })
 
@@ -61,6 +57,7 @@ minetest.register_node("vines:ropeladder", {
 	paramtype2 = "wallmounted",
 	walkable = false,
 	climbable = true,
+	sunlight_propagates = true,
 	selection_box = {
 		type = "wallmounted",
 		--wall_top = = <default>
@@ -84,6 +81,7 @@ minetest.register_node("vines:ropeladder_bottom", {
 	paramtype2 = "wallmounted",
 	walkable = false,
 	climbable = true,
+	sunlight_propagates = true,
 	selection_box = {
 		type = "wallmounted",
 		--wall_top = = <default>
@@ -128,6 +126,7 @@ minetest.register_node("vines:ropeladder_falling", {
 	paramtype2 = "wallmounted",
 	walkable = false,
 	climbable = true,
+	sunlight_propagates = true,
 	selection_box = {
 		type = "wallmounted",
 		--wall_top = = <default>
@@ -145,11 +144,9 @@ minetest.register_node("vines:ropeladder_falling", {
 	on_timer = function( pos, elapsed )
 		local p = {x=pos.x, y=pos.y-1, z=pos.z}
 		local n = minetest.get_node(p)
-		local o = minetest.get_node(pos)
-		if  (n.name == 'vines:ropeladder' or n.name == 'vines:ropeladder_bottom') then
-			minetest.add_node(p, {name="vines:ropeladder_falling", param2=o.param2})
-		end
+
 		if (n.name ~= "ignore") then
+			vines.destroy_rope_starting(p, 'vines:ropeladder', 'vines:ropeladder_bottom', 'vines:ropeladder_falling')
 			minetest.set_node(pos, {name="air"})
 		else
 			local timer = minetest.get_node_timer( pos )
