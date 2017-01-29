@@ -32,7 +32,7 @@ vines.register_vine = function( name, defs, biome )
     sunlight_propagates = true,
     paramtype = "light",
     paramtype2 = "wallmounted",
-    buildable_to = true,
+    buildable_to = false,
     tiles = { vine_image_end },
     drawtype = drawtype,
     inventory_image = vine_image_end,
@@ -61,7 +61,6 @@ vines.register_vine = function( name, defs, biome )
     end
   })
 
-
   minetest.register_node( vine_name_middle, {
     description = "Matured "..defs.description,
     walkable = false,
@@ -70,7 +69,7 @@ vines.register_vine = function( name, defs, biome )
     sunlight_propagates = true,
     paramtype = "light",
     paramtype2 = "wallmounted",
-    buildable_to = true,
+    buildable_to = false,
     tiles = { vine_image_middle },
     wield_image = vine_image_middle,
     drawtype = drawtype,
@@ -83,7 +82,7 @@ vines.register_vine = function( name, defs, biome )
       local bottom = {x=pos.x, y=pos.y-1, z=pos.z}
       local bottom_node = minetest.get_node( bottom )
       if minetest.get_item_group( bottom_node.name, "vines") then
-        minetest.remove_node( bottom )
+        minetest.after( 0, minetest.remove_node, bottom )
       end
     end,
     after_dig_node = function( pos, node, oldmetadata, user )
@@ -94,7 +93,7 @@ vines.register_vine = function( name, defs, biome )
   biome_lib:spawn_on_surfaces( biome )
 
   local override_nodes = function( nodes, defs )
-    local function override( index, registered )
+  local function override( index, registered )
       local node = nodes[ index ]
       if index > #nodes then return registered end
       if minetest.registered_nodes[node] then
