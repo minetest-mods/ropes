@@ -10,7 +10,7 @@ minetest.register_craft({
 })
 
 minetest.register_craftitem("vines:ropesegment", {
-  description = "Rope",
-  groups = {vines = 1},
-  inventory_image = "vines_item.png",
+	description = "Rope",
+	groups = {vines = 1},
+	inventory_image = "vines_item.png",
 })

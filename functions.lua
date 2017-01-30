@@ -132,42 +132,69 @@ end
 
 local c_air = minetest.get_content_id("air")
 
-vines.destroy_rope_starting = function( p, targetnode, bottomnode, topnode )
-	local n = minetest.get_node(p).name
-	if n ~= targetnode and n ~= bottomnode then
+vines.destroy_rope_starting = function(pos, targetnode, bottomnode, topnode )
+	local node_name = minetest.get_node(pos).name
+	if node_name ~= targetnode and node_name ~= bottomnode then
 		return
 	end
-	local y1 = p.y
-	local tab = {}
-	local i = 1
-	while n == targetnode do
-		tab[i] = p
-		i = i+1
-		p.y = p.y-1
-		n = minetest.get_node(p).name
+	local y_top = pos.y
+	local y_bottom = y_top
+	local true_bottom = true	
+	while true do
+		minetest.debug("loop", y_bottom)
+		node_name = minetest.get_node({x=pos.x, y=y_bottom - 1, z=pos.z}).name
+		if node_name == targetnode or node_name == bottomnode then
+			y_bottom = y_bottom - 1
+		elseif node_name == "ignore" then
+			true_bottom = false
+			break
+		else
+			break
+		end
 	end
-	if n == bottomnode then
-		tab[i] = p
-	end
-	local y0 = p.y
 
 	local manip = minetest.get_voxel_manip()
-	local p0 = {x=p.x, y=y0, z=p.z}
-	local p1 = {x=p.x, y=y0+1, z=p.z}
-	local p2 = {x=p.x, y=y1, z=p.z}
-	local pos1, pos2 = manip:read_from_map(p0, p2)
-	area = VoxelArea:new({MinEdge=pos1, MaxEdge=pos2})
-	nodes = manip:get_data()
+	local pos_bottom = {x=pos.x, y=y_bottom, z=pos.z}
+	local pos_top = {x=pos.x, y=y_top, z=pos.z}
+	local pos1, pos2 = manip:read_from_map(pos_bottom, pos_top)
+	local area = VoxelArea:new({MinEdge=pos1, MaxEdge=pos2})
+	local nodes = manip:get_data()
 
-	for i in area:iterp(p1, p2) do
+	for i in area:iterp(pos_bottom, pos_top) do
 		nodes[i] = c_air
 	end
-	nodes[area:indexp(p0)] = minetest.get_content_id(topnode)
+	if not true_bottom then
+		nodes[area:indexp(pos_bottom)] = minetest.get_content_id(topnode)
+	end
 
 	manip:set_data(nodes)
 	manip:write_to_map()
 	manip:update_map() -- <— this takes time
 	
-    local timer = minetest.get_node_timer( p0 )
-    timer:start( 1 )
+	if not true_bottom then
+		minetest.get_node_timer(pos_bottom):start(1)
+	end
+end
+
+vines.hanging_after_destruct = function(pos, top_node, middle_node, bottom_node)
+	local node = minetest.get_node(pos)
+	if node.name == top_node or node.name == middle_node or node.name == bottom_node then
+		return -- this was done by another ladder node changing this one, don't react
+	end
+
+	pos.y = pos.y + 1 -- one up
+	local node_above = minetest.get_node(pos)
+	if node_above.name == middle_node then
+		minetest.swap_node(pos, {name=bottom_node, param2=node_above.param2})
+	end
+	
+	pos.y = pos.y - 2 -- one down
+	local node_below = minetest.get_node(pos)
+	if node_below.name == middle_node then
+		vines.destroy_rope_starting(pos, middle_node, bottom_node, top_node)
+		--minetest.swap_node(pos, {name="vines:ropeladder_falling", param2=node_below.param2})
+		--minetest.get_node_timer(pos):start(0)
+	elseif node_below.name == bottom_node then
+		minetest.swap_node(pos, {name="air"})
+	end
 end
