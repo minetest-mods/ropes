@@ -14,6 +14,7 @@ if not rope_ladder_length then
 end
 vines.ropeLadderLength = rope_ladder_length
 
+dofile( minetest.get_modpath( vines.name ) .. "/doc.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/functions.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/aliases.lua" )
 dofile( minetest.get_modpath( vines.name ) .. "/crafts.lua" )

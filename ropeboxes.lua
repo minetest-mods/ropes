@@ -1,6 +1,7 @@
 local function register_rope_block(multiple, pixels)
 	minetest.register_node(string.format("vines:%irope_block", multiple), {
 	description = string.format("Rope %im", vines.ropeLength*multiple),
+	_doc_items_create_entry = false,
 	drawtype="nodebox",
 	sunlight_propagates = true,
 	paramtype = "light",
@@ -71,6 +72,10 @@ local function register_rope_block(multiple, pixels)
 			}
 		})
 	end
+	
+	if minetest.get_modpath("doc") then
+		doc.add_entry_alias("nodes", "vines:rope", "nodes", string.format("vines:%irope_block", multiple))
+	end
 end
 
 --creates rope blocks with length multiples 1-5.
@@ -83,6 +88,8 @@ register_rope_block(5, 12)
 
 minetest.register_node("vines:rope", {
 	description = "Rope",
+	_doc_items_longdesc = vines.doc.ropebox_longdesc,
+    _doc_items_usagehelp = vines.doc.ropebox_usage,
 	walkable = false,
 	climbable = true,
 	sunlight_propagates = true,
@@ -103,6 +110,7 @@ minetest.register_node("vines:rope", {
 
 minetest.register_node("vines:rope_bottom", {
 	description = "Rope",
+	_doc_items_create_entry = false,
 	walkable = false,
 	climbable = true,
 	sunlight_propagates = true,
@@ -146,6 +154,7 @@ minetest.register_node("vines:rope_bottom", {
 
 minetest.register_node("vines:rope_top", {
 	description = "Rope",
+	_doc_items_create_entry = false,
 	walkable = false,
 	climbable = true,
 	sunlight_propagates = true,

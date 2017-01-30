@@ -1,5 +1,7 @@
 minetest.register_node("vines:ropeladder_top", {
 	description = "Rope ladder",
+	_doc_items_longdesc = vines.doc.ropeladder_longdesc,
+    _doc_items_usagehelp = vines.doc.ropeladder_usage,
 	drawtype = "signlike",
 	tiles = {"default_ladder_wood.png^vines_ropeladder_top.png"},
 	is_ground_content = false,
@@ -47,6 +49,7 @@ minetest.register_craft({
 
 minetest.register_node("vines:ropeladder", {
 	description = "Rope ladder",
+	_doc_items_create_entry = false,
 	drop = "",
 	drawtype = "signlike",
 	tiles = {"default_ladder_wood.png^vines_ropeladder.png"},
@@ -74,6 +77,7 @@ minetest.register_node("vines:ropeladder", {
 
 minetest.register_node("vines:ropeladder_bottom", {
 	description = "Rope ladder",
+	_doc_items_create_entry = false,
 	drop = "",
 	drawtype = "signlike",
 	tiles = {"default_ladder_wood.png^vines_ropeladder_bottom.png"},
@@ -125,6 +129,7 @@ minetest.register_node("vines:ropeladder_bottom", {
 
 minetest.register_node("vines:ropeladder_falling", {
 	description = "Rope ladder",
+	_doc_items_create_entry = false,
 	drop = "",
 	drawtype = "signlike",
 	tiles = {"default_ladder_wood.png^vines_ropeladder.png"},
