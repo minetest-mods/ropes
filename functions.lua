@@ -25,6 +25,8 @@ vines.register_vine = function( name, defs, biome )
 
   minetest.register_node( vine_name_end, {
     description = defs.description,
+	_doc_items_longdesc = defs._doc_items_longdesc,
+	_doc_items_usagehelp = defs._doc_items_usagehelp,
     walkable = false,
     climbable = true,
     wield_image = vine_image_end,
@@ -63,6 +65,7 @@ vines.register_vine = function( name, defs, biome )
 
   minetest.register_node( vine_name_middle, {
     description = "Matured "..defs.description,
+	_doc_items_create_entry = false,
     walkable = false,
     climbable = true,
     drop = "",
@@ -90,6 +93,10 @@ vines.register_vine = function( name, defs, biome )
     end
   })
 
+  if minetest.get_modpath("doc") then
+    doc.add_entry_alias("nodes", vine_name_end, "nodes", vine_name_middle)
+  end
+  
   biome_lib:spawn_on_surfaces( biome )
 
   local override_nodes = function( nodes, defs )

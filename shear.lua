@@ -2,6 +2,8 @@ local USES = 200
 
 minetest.register_tool("vines:shears", {
   description = "Shears",
+  _doc_items_longdesc = vines.doc.shears_longdesc,
+  _doc_items_usagehelp = vines.doc.shears_usage,
   inventory_image = "vines_shears.png",
   wield_image = "vines_shears.png",
   stack_max = 1,

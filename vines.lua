@@ -1,5 +1,7 @@
 vines.register_vine( 'root', {
   description = "Roots",
+  _doc_items_longdesc = vines.doc.roots_longdesc,
+  _doc_items_usagehelp = vines.doc.vines_usage,
   average_length = 9,
 },{
   choose_random_wall = true,
@@ -18,6 +20,8 @@ vines.register_vine( 'root', {
 
 vines.register_vine( 'vine', {
   description = "Vines",
+  _doc_items_longdesc = vines.doc.vines_longdesc,
+  _doc_items_usagehelp = vines.doc.vines_usage,
   average_length = 5,
 },{
   choose_random_wall = true,
@@ -39,6 +43,8 @@ vines.register_vine( 'vine', {
 
 vines.register_vine( 'side', {
   description = "Vines",
+  _doc_items_longdesc = vines.doc.vines_longdesc,
+  _doc_items_usagehelp = vines.doc.vines_usage,
   average_length = 6,
 },{
   choose_random_wall = true,
@@ -61,6 +67,8 @@ vines.register_vine( 'side', {
 
 vines.register_vine( "jungle", {
   description = "Jungle Vines",
+  _doc_items_longdesc = vines.doc.vines_longdesc,
+  _doc_items_usagehelp = vines.doc.vines_usage,
   average_length = 7,
 },{
   choose_random_wall = true,
@@ -88,6 +96,8 @@ vines.register_vine( "jungle", {
 
 vines.register_vine( 'willow', {
   description = "Willow Vines",
+  _doc_items_longdesc = vines.doc.vines_longdesc,
+  _doc_items_usagehelp = vines.doc.vines_usage,
   average_length = 9,
 },{
   choose_random_wall = true,
