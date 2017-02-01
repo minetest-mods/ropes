@@ -11,8 +11,8 @@ local function register_rope_block(multiple, pixels)
 		string.format("default_wood.png^ropes_%irope.png", multiple),
 		"default_wood.png^ropes_side.png",
 		"default_wood.png^ropes_side.png",
-		string.format("default_wood.png^ropes_%irope_frontback.png", multiple),
-		string.format("default_wood.png^ropes_%irope_frontback.png", multiple),
+		string.format("default_wood.png^(ropes_%irope.png^[mask:ropes_mask.png)", multiple),
+		string.format("default_wood.png^(ropes_%irope.png^[mask:ropes_mask.png)", multiple),
 	},
 	node_box = {
 		type = "fixed",
