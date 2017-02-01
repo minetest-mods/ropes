@@ -1,7 +1,7 @@
 -- Misc
 
 minetest.register_craft({
-	output =  'vines:ropesegment',
+	output =  'ropes:ropesegment',
 	recipe = {
 		{'farming:cotton',},
 		{'farming:cotton',},
@@ -9,10 +9,27 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craftitem("vines:ropesegment", {
+minetest.register_craftitem("ropes:ropesegment", {
 	description = "Rope",
-	_doc_items_longdesc = vines.doc.ropesegment_longdesc,
-    _doc_items_usagehelp = vines.doc.ropesegment_usage,
-	groups = {vines = 1},
-	inventory_image = "vines_item.png",
+	_doc_items_longdesc = ropes.doc.ropesegment_longdesc,
+    _doc_items_usagehelp = ropes.doc.ropesegment_usage,
+	groups = {ropes = 1},
+	inventory_image = "ropes_item.png",
+})
+
+minetest.register_craft({
+	output = "ropes:ropeladder_top",
+	recipe =  {
+		{'group:ropes','default:stick','group:ropes'},
+		{'group:ropes','default:stick','group:ropes'},
+	}
+})
+
+minetest.register_craft({
+	output = "ropes:1rope_block",
+	recipe =  {
+		{'default:wood',},
+		{'group:ropes',},
+		{'group:ropes'}
+	}
 })

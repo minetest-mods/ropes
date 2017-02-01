@@ -1,4 +1,2 @@
 default
-biome_lib
-moretrees?
 doc?
