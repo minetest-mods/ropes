@@ -1,13 +1,15 @@
 -- Misc
 
-minetest.register_craft({
-	output =  'ropes:ropesegment',
-	recipe = {
-		{'farming:cotton',},
-		{'farming:cotton',},
-		{'farming:cotton'}
-	}
-})
+if minetest.get_modpath("farming") then
+	minetest.register_craft({
+		output =  'ropes:ropesegment',
+		recipe = {
+			{'farming:cotton',},
+			{'farming:cotton',},
+			{'farming:cotton'}
+		}
+	})
+end
 
 minetest.register_craftitem("ropes:ropesegment", {
 	description = "Rope",
