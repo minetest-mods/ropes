@@ -43,6 +43,6 @@ swapper("vines:ropeladder_top", "ropes:ropeladder_top")
 swapper("vines:ropeladder", "ropes:ropeladder")
 swapper("vines:ropeladder_bottom", "ropes:ropeladder_bottom")
 swapper("vines:ropeladder_falling", "ropes:ropeladder_falling")
-
+swapper("vines:rope_block", "ropes:5rope_block") -- for the original vines mod
 
 print("[Ropes] Loaded!")
