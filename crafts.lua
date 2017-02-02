@@ -22,15 +22,15 @@ minetest.register_craftitem("ropes:ropesegment", {
 minetest.register_craft({
 	output = "ropes:ropeladder_top",
 	recipe =  {
-		{'group:vines','default:stick','group:vines'},
-		{'group:vines','default:stick','group:vines'},
+		{'group:vines','group:stick','group:vines'},
+		{'group:vines','group:stick','group:vines'},
 	}
 })
 
 minetest.register_craft({
 	output = "ropes:1rope_block",
 	recipe =  {
-		{'default:wood',},
+		{'group:wood',},
 		{'group:vines',},
 		{'group:vines'}
 	}
