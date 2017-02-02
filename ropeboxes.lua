@@ -29,13 +29,20 @@ local function register_rope_block(multiple, pixels)
 	collision_box = {type="regular"},
 	groups = {flammable=2, choppy=2, oddly_breakable_by_hand=1},
 	
-	after_place_node = function(pos)
+	after_place_node = function(pos, placer)
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
+		local placer_name = placer:get_player_name()
+		
+		if minetest.is_protected(pos_below, placer_name) then
+			return
+		end
+		
 		local node_below = minetest.get_node(pos_below)
 		if node_below.name == "air" then
 		minetest.add_node(pos_below, {name="ropes:rope_bottom"})
 		local meta = minetest.get_meta(pos_below)
 		meta:set_int("length_remaining", ropes.ropeLength*multiple)
+		meta:set_string("placer", placer:get_player_name())
 		end
 	end,
 	after_destruct = function(pos)
@@ -125,12 +132,14 @@ minetest.register_node("ropes:rope_bottom", {
 		local currentend = minetest.get_node(pos)
 		local currentmeta = minetest.get_meta(pos)
 		local currentlength = currentmeta:get_int("length_remaining")
+		local placer_name = currentmeta:get_string("placer")
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 		local node_below = minetest.get_node(pos_below)
-		if  node_below.name == "air" and (currentlength > 1) then
+		if  node_below.name == "air" and (currentlength > 1) and not minetest.is_protected(pos_below, placer_name) then
 			minetest.add_node(pos_below, {name="ropes:rope_bottom"})
 			local newmeta = minetest.get_meta(pos_below)
 			newmeta:set_int("length_remaining", currentlength-1)
+			newmeta:set_string("placer", placer_name)
 			minetest.set_node(pos, {name="ropes:rope"})
 		else
 			local timer = minetest.get_node_timer( pos )

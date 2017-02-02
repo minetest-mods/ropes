@@ -22,15 +22,17 @@ minetest.register_node("ropes:ropeladder_top", {
 	groups = { choppy=2, oddly_breakable_by_hand=1,flammable=2},
 	sounds = default.node_sound_wood_defaults(),
 
-	after_place_node = function(pos)
+	after_place_node = function(pos, placer)
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 		local node_below = minetest.get_node(pos_below)
 		local this_node = minetest.get_node(pos)
+		local placer_name = placer:get_player_name()
 		-- param2 holds the facing direction of this node. If it's 0 or 1 the node is "flat" and we don't want the ladder to extend.
-		if node_below.name == "air" and this_node.param2 > 1 then
+		if node_below.name == "air" and this_node.param2 > 1 and not minetest.is_protected(pos_below, placer_name) then
 			minetest.add_node(pos_below, {name="ropes:ropeladder_bottom", param2=this_node.param2})
 			local meta = minetest.get_meta(pos_below)
 			meta:set_int("length_remaining", ropes.ropeLadderLength)
+			meta:set_string("placer", placer_name)
 		end
 	end,
 	after_destruct = function(pos)
@@ -98,14 +100,16 @@ minetest.register_node("ropes:ropeladder_bottom", {
 		local currentend = minetest.get_node(pos)
 		local currentmeta = minetest.get_meta(pos)
 		local currentlength = currentmeta:get_int("length_remaining")
+		local placer_name = currentmeta:get_string("placer")
 		local newpos = {x=pos.x, y=pos.y-1, z=pos.z}
 		local newnode = minetest.get_node(newpos)
 		local oldnode = minetest.get_node(pos)
-		if currentlength > 1 then
+		if currentlength > 1 and not minetest.is_protected(newpos, placer_name) then
 			if  newnode.name == "air" then
 				minetest.add_node(newpos, {name="ropes:ropeladder_bottom", param2=oldnode.param2})
 				local newmeta = minetest.get_meta(newpos)
 				newmeta:set_int("length_remaining", currentlength-1)
+				newmeta:set_string("placer", placer_name)
 				minetest.set_node(pos, {name="ropes:ropeladder", param2=oldnode.param2})
 			else
 				local timer = minetest.get_node_timer( pos )
