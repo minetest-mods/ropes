@@ -1,6 +1,10 @@
+-- internationalization boilerplate
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
 local function register_rope_block(multiple, pixels)
 	minetest.register_node(string.format("ropes:%irope_block", multiple), {
-	description = string.format("Rope %im", ropes.ropeLength*multiple),
+	description = string.format(S("Rope %im"), ropes.ropeLength*multiple),
 	_doc_items_create_entry = false,
 	drawtype="nodebox",
 	sunlight_propagates = true,
@@ -85,7 +89,7 @@ register_rope_block(4, 10)
 register_rope_block(5, 12)
 
 minetest.register_node("ropes:rope", {
-	description = "Rope",
+	description = S("Rope"),
 	_doc_items_longdesc = ropes.doc.ropebox_longdesc,
     _doc_items_usagehelp = ropes.doc.ropebox_usage,
 	walkable = false,
@@ -107,7 +111,7 @@ minetest.register_node("ropes:rope", {
 })
 
 minetest.register_node("ropes:rope_bottom", {
-	description = "Rope",
+	description = S("Rope"),
 	_doc_items_create_entry = false,
 	walkable = false,
 	climbable = true,
@@ -153,7 +157,7 @@ minetest.register_node("ropes:rope_bottom", {
 })
 
 minetest.register_node("ropes:rope_top", {
-	description = "Rope",
+	description = S("Rope"),
 	_doc_items_create_entry = false,
 	walkable = false,
 	climbable = true,

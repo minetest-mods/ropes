@@ -1,5 +1,9 @@
+-- internationalization boilerplate
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
 minetest.register_node("ropes:ropeladder_top", {
-	description = "Rope ladder",
+	description = S("Rope Ladder"),
 	_doc_items_longdesc = ropes.doc.ropeladder_longdesc,
     _doc_items_usagehelp = ropes.doc.ropeladder_usage,
 	drawtype = "signlike",
@@ -42,7 +46,7 @@ minetest.register_node("ropes:ropeladder_top", {
 })
 
 minetest.register_node("ropes:ropeladder", {
-	description = "Rope ladder",
+	description = S("Rope Ladder"),
 	_doc_items_create_entry = false,
 	drop = "",
 	drawtype = "signlike",
@@ -70,7 +74,7 @@ minetest.register_node("ropes:ropeladder", {
 })
 
 minetest.register_node("ropes:ropeladder_bottom", {
-	description = "Rope ladder",
+	description = S("Rope Ladder"),
 	_doc_items_create_entry = false,
 	drop = "",
 	drawtype = "signlike",
@@ -124,7 +128,7 @@ minetest.register_node("ropes:ropeladder_bottom", {
 })
 
 minetest.register_node("ropes:ropeladder_falling", {
-	description = "Rope ladder",
+	description = S("Rope Ladder"),
 	_doc_items_create_entry = false,
 	drop = "",
 	drawtype = "signlike",

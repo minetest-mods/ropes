@@ -2,6 +2,10 @@ ropes = {
   name = 'ropes',
 }
 
+-- internationalization boilerplate
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
 local rope_length = minetest.setting_get("ropes_rope_length")
 if not rope_length then
 	rope_length = 50
@@ -45,4 +49,4 @@ swapper("vines:ropeladder_bottom", "ropes:ropeladder_bottom")
 swapper("vines:ropeladder_falling", "ropes:ropeladder_falling")
 swapper("vines:rope_block", "ropes:5rope_block") -- for the original vines mod
 
-print("[Ropes] Loaded!")
+print(S("[Ropes] Loaded!"))

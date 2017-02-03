@@ -47,7 +47,7 @@ end
 ropes.hanging_after_destruct = function(pos, top_node, middle_node, bottom_node)
 	local node = minetest.get_node(pos)
 	if node.name == top_node or node.name == middle_node or node.name == bottom_node then
-		return -- this was done by another ladder node changing this one, don't react
+		return -- this was done by another ladder or rope node changing this one, don't react
 	end
 
 	pos.y = pos.y + 1 -- one up
@@ -60,8 +60,6 @@ ropes.hanging_after_destruct = function(pos, top_node, middle_node, bottom_node)
 	local node_below = minetest.get_node(pos)
 	if node_below.name == middle_node then
 		ropes.destroy_rope_starting(pos, middle_node, bottom_node, top_node)
-		--minetest.swap_node(pos, {name="ropes:ropeladder_falling", param2=node_below.param2})
-		--minetest.get_node_timer(pos):start(0)
 	elseif node_below.name == bottom_node then
 		minetest.swap_node(pos, {name="air"})
 	end
