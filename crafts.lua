@@ -38,7 +38,7 @@ minetest.register_craft({
 	}
 })
 
-local cotton_burn_time = 3
+local cotton_burn_time = 1
 local wood_burn_time = minetest.get_craft_result({method="fuel", width=1, items={ItemStack("default:wood")}}).time
 local rope_burn_time = cotton_burn_time * 3
 local rope_box_burn_time = wood_burn_time + rope_burn_time * 2
