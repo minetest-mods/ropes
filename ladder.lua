@@ -32,7 +32,9 @@ minetest.register_node("ropes:ropeladder_top", {
 		local this_node = minetest.get_node(pos)
 		local placer_name = placer:get_player_name()
 		-- param2 holds the facing direction of this node. If it's 0 or 1 the node is "flat" and we don't want the ladder to extend.
-		if node_below.name == "air" and this_node.param2 > 1 and not minetest.is_protected(pos_below, placer_name) then
+		if node_below.name == "air" and this_node.param2 > 1
+		  and (not minetest.is_protected(pos_below, placer_name)
+		  or minetest.check_player_privs(placer_name, "protection_bypass")) then
 			minetest.add_node(pos_below, {name="ropes:ropeladder_bottom", param2=this_node.param2})
 			local meta = minetest.get_meta(pos_below)
 			meta:set_int("length_remaining", ropes.ropeLadderLength)
@@ -108,7 +110,8 @@ minetest.register_node("ropes:ropeladder_bottom", {
 		local newpos = {x=pos.x, y=pos.y-1, z=pos.z}
 		local newnode = minetest.get_node(newpos)
 		local oldnode = minetest.get_node(pos)
-		if currentlength > 1 and not minetest.is_protected(newpos, placer_name) then
+		if currentlength > 1 and (not minetest.is_protected(newpos, placer_name)
+		  or minetest.check_player_privs(placer_name, "protection_bypass")) then
 			if  newnode.name == "air" then
 				minetest.add_node(newpos, {name="ropes:ropeladder_bottom", param2=oldnode.param2})
 				local newmeta = minetest.get_meta(newpos)

@@ -37,7 +37,7 @@ local function register_rope_block(multiple, pixels)
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 		local placer_name = placer:get_player_name()
 		
-		if minetest.is_protected(pos_below, placer_name) then
+		if minetest.is_protected(pos_below, placer_name) and not minetest.check_player_privs(placer, "protection_bypass") then
 			return
 		end
 		
@@ -139,7 +139,10 @@ minetest.register_node("ropes:rope_bottom", {
 		local placer_name = currentmeta:get_string("placer")
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 		local node_below = minetest.get_node(pos_below)
-		if  node_below.name == "air" and (currentlength > 1) and not minetest.is_protected(pos_below, placer_name) then
+		if  node_below.name == "air"
+		  and (currentlength > 1)
+		  and (not minetest.is_protected(pos_below, placer_name) or
+		   minetest.check_player_privs(placer_name, "protection_bypass")) then
 			minetest.add_node(pos_below, {name="ropes:rope_bottom"})
 			local newmeta = minetest.get_meta(pos_below)
 			newmeta:set_int("length_remaining", currentlength-1)
@@ -164,7 +167,7 @@ minetest.register_node("ropes:rope_top", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	drop = "",
-	tiles = { "ropes_rope_top.png" },
+	tiles = { "ropes_rope_bottom.png^[transformR180" },
 	drawtype = "plantlike",
 	groups = {not_in_creative_inventory=1},
 	sounds =  default.node_sound_leaves_defaults(),
