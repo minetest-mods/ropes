@@ -1,8 +1,8 @@
 #The shortest rope will extend for this many meters. Longer ropes come in
 #multiples of this length.
 #Changing this value will not affect ropes that already exist in-world.
-vines_rope_length (Rope length) int 50 1 30000
+ropes_rope_length (Rope length) int 50 1 30000
 
 #Rope ladders will extend this far at maximum.
 #Changing this value will not affect rope ladders that already exist in-world.
-vines_rope_ladder_length (Rope ladder length) int 50 1 30000
+ropes_rope_ladder_length (Rope ladder length) int 50 1 30000
