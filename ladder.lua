@@ -43,7 +43,7 @@ minetest.register_node("ropes:ropeladder_top", {
 	end,
 	after_destruct = function(pos)
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
-		ropes.destroy_rope_starting(pos_below, "ropes:ropeladder", "ropes:ropeladder_bottom", "ropes:ropeladder_falling")
+		ropes.destroy_rope(pos_below, {"ropes:ropeladder", "ropes:ropeladder_bottom", "ropes:ropeladder_falling"})
 	end,
 })
 
@@ -75,6 +75,8 @@ minetest.register_node("ropes:ropeladder", {
 	end,
 })
 
+local ladder_extender = ropes.make_rope_on_timer("ropes:ropeladder")
+
 minetest.register_node("ropes:ropeladder_bottom", {
 	description = S("Rope Ladder"),
 	_doc_items_create_entry = false,
@@ -102,28 +104,7 @@ minetest.register_node("ropes:ropeladder_bottom", {
 		local timer = minetest.get_node_timer( pos )
 		timer:start( 1 )
 	end,
-	on_timer = function( pos, elapsed )
-		local currentend = minetest.get_node(pos)
-		local currentmeta = minetest.get_meta(pos)
-		local currentlength = currentmeta:get_int("length_remaining")
-		local placer_name = currentmeta:get_string("placer")
-		local newpos = {x=pos.x, y=pos.y-1, z=pos.z}
-		local newnode = minetest.get_node(newpos)
-		local oldnode = minetest.get_node(pos)
-		if currentlength > 1 and (not minetest.is_protected(newpos, placer_name)
-		  or minetest.check_player_privs(placer_name, "protection_bypass")) then
-			if  newnode.name == "air" then
-				minetest.add_node(newpos, {name="ropes:ropeladder_bottom", param2=oldnode.param2})
-				local newmeta = minetest.get_meta(newpos)
-				newmeta:set_int("length_remaining", currentlength-1)
-				newmeta:set_string("placer", placer_name)
-				minetest.set_node(pos, {name="ropes:ropeladder", param2=oldnode.param2})
-			else
-				local timer = minetest.get_node_timer( pos )
-				timer:start( 1 )
-			end
-		end
-	end,
+	on_timer = ladder_extender,
 	
 	after_destruct = function(pos)
 		ropes.hanging_after_destruct(pos, "ropes:ropeladder_falling", "ropes:ropeladder", "ropes:ropeladder_bottom")
@@ -162,7 +143,7 @@ minetest.register_node("ropes:ropeladder_falling", {
 		local node_below = minetest.get_node(pos_below)
 
 		if (node_below.name ~= "ignore") then
-			ropes.destroy_rope_starting(pos_below, 'ropes:ropeladder', 'ropes:ropeladder_bottom', 'ropes:ropeladder_falling')
+			ropes.destroy_rope(pos_below, {'ropes:ropeladder', 'ropes:ropeladder_bottom', 'ropes:ropeladder_falling'})
 			minetest.swap_node(pos, {name="air"})
 		else
 			local timer = minetest.get_node_timer( pos )

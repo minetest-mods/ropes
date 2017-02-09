@@ -6,17 +6,20 @@ ropes = {
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
-local rope_length = minetest.setting_get("ropes_rope_length")
-if not rope_length then
-	rope_length = 50
+ropes.ropeLength = tonumber(minetest.setting_get("ropes_rope_length"))
+if not ropes.ropeLength then
+	ropes.ropeLength = 50
 end
-ropes.ropeLength = rope_length
 
-local rope_ladder_length = minetest.setting_get("ropes_rope_ladder_length")
-if not rope_ladder_length then
-	rope_ladder_length = 50
+ropes.ropeLadderLength = tonumber(minetest.setting_get("ropes_rope_ladder_length"))
+if not ropes.ropeLadderLength then
+	ropes.ropeLadderLength = 50
 end
-ropes.ropeLadderLength = rope_ladder_length
+
+ropes.ropeLengthMaxMultiple = tonumber(minetest.setting_get("ropes_rope_box_max_multiple"))
+if not ropes.ropeLengthMaxMultiple then
+	ropes.ropeLengthMaxMultiple = 9
+end
 
 dofile( minetest.get_modpath( ropes.name ) .. "/doc.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/functions.lua" )

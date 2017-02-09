@@ -6,3 +6,9 @@ ropes_rope_length (Rope length) int 50 1 30000
 #Rope ladders will extend this far at maximum.
 #Changing this value will not affect rope ladders that already exist in-world.
 ropes_rope_ladder_length (Rope ladder length) int 50 1 30000
+
+#Sets the maximum length multiple rope box permitted to be crafted.
+#So for example if the rope length is set to 50 and this is set to 5,
+#the longest possible rope box a player can craft has 250 meters of rope.
+#Allowed values run from 1 to 9
+ropes_rope_box_max_multiple (Maximum rope box multiple) int 9 1 9
