@@ -4,12 +4,12 @@ local S, NS = dofile(MP.."/intllib.lua")
 
 local function rope_box_tiles(count)
 	return {
-		string.format("ropes_ropebox_front_%i.png", count),
-		string.format("ropes_ropebox_front_%i.png", count),
+		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
+		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
 		"ropes_ropebox_side.png",
 		"ropes_ropebox_side.png",
-		string.format("ropes_ropebox_front_%i.png", count),
-		string.format("ropes_ropebox_front_%i.png", count),
+		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
+		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
 	}
 end
 
@@ -207,7 +207,7 @@ local rope_def = {
 	sunlight_propagates = true,
 	paramtype = "light",
 	drop = "",
-	tiles = { "ropes_ropebox_front_3.png" },
+	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds =  default.node_sound_leaves_defaults(),
 	drawtype = "nodebox",
@@ -237,7 +237,7 @@ local rope_bottom_def = {
 	sunlight_propagates = true,
 	paramtype = "light",
 	drop = "",
-	tiles = { "ropes_ropebox_front_3.png" },
+	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	drawtype = "nodebox",
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds =  default.node_sound_leaves_defaults(),
