@@ -66,7 +66,7 @@ swapper("vines:ropeladder_falling", "ropes:ropeladder_falling", "vines_to_ropes_
 swapper("vines:rope_block", "ropes:5rope_block", "vines_to_ropes_upgrade") -- for the original vines mod
 
 for i=1,9 do
-	swapper(string.format("ropes:%irope_block", i), string.format("ropes:wood%irope_block", i), "rope_block_composition_upgrade")
+	swapper(string.format("ropes:%irope_block", i), string.format("ropes:steel%irope_block", i), "rope_block_composition_upgrade")
 end
 
 print(S("[Ropes] Loaded!"))
