@@ -2,14 +2,14 @@
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
-local function rope_box_tiles(count)
+local function rope_box_tiles(count, tint)
 	return {
-		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
-		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
-		"ropes_ropebox_side.png",
-		"ropes_ropebox_side.png",
-		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
-		string.format("ropes_ropebox_front_%i.png^ropes_%i.png", count, count),
+		string.format("ropes_ropebox_front_%i.png^[colorize:%s^ropes_ropebox_front_%i.png^ropes_%i.png", count, tint, count, count),
+		string.format("ropes_ropebox_front_%i.png^[colorize:%s^ropes_ropebox_front_%i.png^ropes_%i.png", count, tint, count, count),
+		string.format("ropes_ropebox_side.png^[colorize:%s^ropes_ropebox_side.png", tint),
+		string.format("ropes_ropebox_side.png^[colorize:%s^ropes_ropebox_side.png", tint),
+		string.format("ropes_ropebox_front_%i.png^[colorize:%s^ropes_ropebox_front_%i.png^ropes_%i.png", count, tint, count, count),
+		string.format("ropes_ropebox_front_%i.png^[colorize:%s^ropes_ropebox_front_%i.png^ropes_%i.png", count, tint, count, count),
 	}
 end
 
@@ -23,7 +23,7 @@ local rope_box_data = {
 		{0.125, -0.5, -0.125, 0.1875, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.1875, -0.5, -0.25, 0.1875, 0.25, 0.25}, -- selection
-	tiles = rope_box_tiles(1),
+	tiles = 1,
 },
 {	
 	node={
@@ -34,7 +34,7 @@ local rope_box_data = {
 		{0.1875, -0.5, -0.125, 0.25, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.1875, -0.5, -0.25, 0.1875, 0.25, 0.25}, -- selection
-	tiles = rope_box_tiles(2),
+	tiles = 2,
 },
 {	
 	node={
@@ -45,7 +45,7 @@ local rope_box_data = {
 		{0.25, -0.5, -0.125, 0.3125, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.3125, -0.5, -0.25, 0.3125, 0.25, 0.25}, -- selection
-	tiles = rope_box_tiles(3),
+	tiles = 3,
 },
 {	
 	node={
@@ -56,7 +56,7 @@ local rope_box_data = {
 		{0.3125, -0.5, -0.125, 0.375, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.375, -0.5, -0.25, 0.375, 0.25, 0.25}, -- selection
-	tiles = rope_box_tiles(4),
+	tiles = 4,
 },
 {	
 	node={
@@ -67,7 +67,7 @@ local rope_box_data = {
 		{0.375, -0.5, -0.125, 0.4375, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.4375, -0.5, -0.25, 0.4375, 0.25, 0.25}, -- selection
-	tiles = rope_box_tiles(5),
+	tiles = 5,
 },
 {
 	node={
@@ -78,7 +78,7 @@ local rope_box_data = {
 		{0.1875, -0.5, -0.125, 0.25, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.1875, -0.5, -0.3125, 0.1875, 0.3125, 0.3125}, -- selection
-	tiles = rope_box_tiles(2),
+	tiles = 2,
 },
 {	
 	node={
@@ -89,7 +89,7 @@ local rope_box_data = {
 		{0.25, -0.5, -0.125, 0.3125, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.3125, -0.5, -0.3125, 0.3125, 0.3125, 0.3125}, -- selection
-	tiles = rope_box_tiles(3),
+	tiles = 3,
 },
 {	
 	node={
@@ -100,7 +100,7 @@ local rope_box_data = {
 		{0.3125, -0.5, -0.125, 0.375, 0.125, 0.125}, -- support
 	},
 	--selection = {-0.375, -0.5, -0.3125, 0.375, 0.3125, 0.3125}, -- selection
-	tiles = rope_box_tiles(4),
+	tiles = 4,
 },
 {	
 	node={
@@ -111,13 +111,14 @@ local rope_box_data = {
 		{0.375, -0.5, -0.125, 0.4375, 0.125, 0.125}, -- support
 	},
 	--selection_bottom = {-0.4375, -0.5, -0.3125, 0.4375, 0.3125, 0.3125}, -- selection
-	tiles = rope_box_tiles(5),
+	tiles = 5,
 }
 }
 
-local function register_rope_block(multiple)
+local function register_rope_block(multiple, max_multiple, name_prefix, node_prefix, tint, flammable)
+	local node_name = string.format("ropes:%s%irope_block", node_prefix, multiple)
 	local rope_block_def = {
-		description = S("Rope @1m", ropes.ropeLength*multiple),
+		description = S("@1 Ropebox @2m", name_prefix, ropes.ropeLength*multiple),
 		_doc_items_create_entry = false,
 		drawtype="nodebox",
 		sunlight_propagates = true,
@@ -125,14 +126,14 @@ local function register_rope_block(multiple)
 		paramtype2 = "wallmounted",
 		walkable = false,
 		climbable = true,
-		tiles = rope_box_data[multiple].tiles,
+		tiles = rope_box_tiles(rope_box_data[multiple].tiles, tint),
 		node_box = {
 			type = "fixed",
 			fixed = rope_box_data[multiple].node
 		},
 		selection_box = {type="regular"},
 		collision_box = {type="regular"},
-		groups = {flammable=2, choppy=2, oddly_breakable_by_hand=1, rope_block = 1},
+		groups = {choppy=2, oddly_breakable_by_hand=1, rope_block = 1},
 	
 		after_place_node = function(pos, placer)
 			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
@@ -161,40 +162,55 @@ local function register_rope_block(multiple)
 	-- some were already placed in-world) but we want to hide it from creative inventory
 	-- and if someone digs it we want to disintegrate it into its component parts to prevent
 	-- reuse.
-	if multiple > ropes.ropeLengthMaxMultiple then
+	if multiple > max_multiple then
 		rope_block_def.groups.not_in_creative_inventory = 1
-		rope_block_def.drop = string.format("ropes:1rope_block %i", multiple)
+		rope_block_def.drop = string.format("ropes:%s1rope_block %i", node_prefix, multiple)
 	end
 	
-	minetest.register_node(string.format("ropes:%irope_block", multiple), rope_block_def)
+	if flammable then
+		rope_block_def.groups.flammable = flammable
+		
+		minetest.register_craft({
+			type = "fuel",
+			recipe = node_name,
+			burntime = ropes.rope_burn_time * multiple + ropes.wood_burn_time,
+		})
+	end
+	
+	minetest.register_node(node_name, rope_block_def)
 	
 	if (multiple ~= 1) then
 		-- Only register a recipe to craft this if it's within the permitted multiple range
-		if multiple <= ropes.ropeLengthMaxMultiple then
-			local rec = {}
-			for i=1,multiple,1 do
-				rec[i] = "ropes:1rope_block"
+		if multiple <= max_multiple then
+			for i = 1, multiple-1 do
+				local rec = {string.format("ropes:%s%irope_block", node_prefix, i)}
+				for n = 1, multiple-i do
+					table.insert(rec, "ropes:ropesegment")
+				end
+				minetest.register_craft({
+					output = node_name,
+					type = "shapeless",
+					recipe = rec
+				})
 			end
-		
-			minetest.register_craft({
-				output = string.format("ropes:%irope_block", multiple),
-				type = "shapeless",
-				recipe = rec
-			})
 		end
 	
 		-- Always allow players to disintegrate this into component parts, in case
 		-- there were some in inventory and the setting was changed.
 		minetest.register_craft({
-			output = string.format("ropes:1rope_block %i", multiple),
+			output = "ropes:ropesegment",
+			type = "shapeless",
 			recipe =  {
-				{string.format('ropes:%irope_block', multiple)}
-			}
+				node_name
+			},
+			replacements = {
+				{node_name, string.format('ropes:%s%irope_block', node_prefix, multiple-1)},
+			},
 		})
 	end
 	
 	if minetest.get_modpath("doc") then
-		doc.add_entry_alias("nodes", "ropes:rope", "nodes", string.format("ropes:%irope_block", multiple))
+		doc.add_entry_alias("nodes", "ropes:rope", "nodes", node_name)
 	end
 end
 
@@ -268,17 +284,56 @@ local rope_bottom_def = {
 	end,
 }
 
---creates rope blocks with length multiples 1-5.
---second parameter sets how many pixels wide the rope texture is
-register_rope_block(1)
-register_rope_block(2)
-register_rope_block(3)
-register_rope_block(4)
-register_rope_block(5)
-register_rope_block(6)
-register_rope_block(7)
-register_rope_block(8)
-register_rope_block(9)
-
 minetest.register_node("ropes:rope", rope_def)
 minetest.register_node("ropes:rope_bottom", rope_bottom_def)
+
+if ropes.woodRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
+	if ropes.woodRopeBoxMaxMultiple > 0 then
+		minetest.register_craft({
+			output = "ropes:1rope_block",
+			recipe =  {
+				{'group:wood'},
+				{'group:vines'}
+			}
+		})
+	end
+	for i = 1,9 do
+		if ropes.woodRopeBoxMaxMultiple >= i or ropes.create_all_definitions then
+			register_rope_block(i, ropes.woodRopeBoxMaxMultiple, S("Wood"), "wood", "#86683a", 2)
+		end
+	end
+end
+
+if ropes.copperRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
+	if ropes.copperRopeBoxMaxMultiple > 0 then
+		minetest.register_craft({
+			output = "ropes:1rope_block",
+			recipe =  {
+				{'default:copper_ingot'},
+				{'group:vines'}
+			}
+		})
+	end
+	for i = 1,9 do
+		if ropes.copperRopeBoxMaxMultiple >= i or ropes.create_all_definitions then
+			register_rope_block(i, ropes.copperRopeBoxMaxMultiple, S("Copper"), "copper", "#c88648")
+		end
+	end
+end
+
+if ropes.steelRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
+	if ropes.steelRopeBoxMaxMultiple > 0 then
+		minetest.register_craft({
+			output = "ropes:1rope_block",
+			recipe =  {
+				{'default:steel_ingot'},
+				{'group:vines'}
+			}
+		})
+	end
+	for i = 1,9 do
+		if ropes.steelRopeBoxMaxMultiple >= i or ropes.create_all_definitions then
+			register_rope_block(i, ropes.steelRopeBoxMaxMultiple, S("Steel"), "steel", "#ffffff")
+		end
+	end
+end

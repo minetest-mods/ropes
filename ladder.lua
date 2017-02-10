@@ -1,8 +1,29 @@
+if ropes.ropeLadderLength == 0 and not ropes.create_all_definitions then
+	return
+end
+
 -- internationalization boilerplate
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
-minetest.register_node("ropes:ropeladder_top", {
+if ropes.ropeLadderLength > 0 then
+	minetest.register_craft({
+		output = "ropes:ropeladder_top",
+		recipe =  {
+			{'','group:stick',''},
+			{'group:vines','group:stick','group:vines'},
+			{'','group:stick',''},
+		}
+	})
+end
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "ropes:ropeladder_top",
+	burntime = ropes.ladder_burn_time,
+})
+
+local rope_ladder_top_def = {
 	description = S("Rope Ladder"),
 	_doc_items_longdesc = ropes.doc.ropeladder_longdesc,
     _doc_items_usagehelp = ropes.doc.ropeladder_usage,
@@ -45,7 +66,13 @@ minetest.register_node("ropes:ropeladder_top", {
 		local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 		ropes.destroy_rope(pos_below, {"ropes:ropeladder", "ropes:ropeladder_bottom", "ropes:ropeladder_falling"})
 	end,
-})
+}
+
+if ropes.ropeLadderLength == 0 then
+	rope_ladder_top_def.groups.not_in_creative_inventory = 1
+end
+
+minetest.register_node("ropes:ropeladder_top", rope_ladder_top_def)
 
 minetest.register_node("ropes:ropeladder", {
 	description = S("Rope Ladder"),
