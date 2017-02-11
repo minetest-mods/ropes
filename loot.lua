@@ -7,7 +7,7 @@ loot.register_loot({
 	payload = {
 		stack = ItemStack("ropes:ropesegment"),
 		min_size = 1,
-		max_size = 99,
+		max_size = 50,
 	},
 })
 
@@ -17,7 +17,7 @@ loot.register_loot({
 	payload = {
 		stack = ItemStack("ropes:ropeladder_top"),
 		min_size = 1,
-		max_size = 40,
+		max_size = 20,
 	},
 })
 end
@@ -28,7 +28,7 @@ loot.register_loot({
 	payload = {
 		stack = ItemStack("ropes:wood1rope_block"),
 		min_size = 1,
-		max_size = 30,
+		max_size = 20,
 	},
 })
 end
@@ -39,7 +39,7 @@ loot.register_loot({
 	payload = {
 		stack = ItemStack("ropes:copper1rope_block"),
 		min_size = 1,
-		max_size = 25,
+		max_size = 15,
 	},
 })
 end
@@ -50,7 +50,7 @@ loot.register_loot({
 	payload = {
 		stack = ItemStack("ropes:steel1rope_block"),
 		min_size = 1,
-		max_size = 20,
+		max_size = 10,
 	},
 })
 end
