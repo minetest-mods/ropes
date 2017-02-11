@@ -3,7 +3,7 @@ if not minetest.get_modpath("loot") then
 end
 
 loot.register_loot({
-	weights = { generic = 200 },
+	weights = { generic = 300 },
 	payload = {
 		stack = ItemStack("ropes:ropesegment"),
 		min_size = 1,
@@ -13,18 +13,18 @@ loot.register_loot({
 
 if ropes.ropeLadderLength > 0 then
 loot.register_loot({
-	weights = { generic = 100 },
+	weights = { generic = 150 },
 	payload = {
 		stack = ItemStack("ropes:ropeladder_top"),
 		min_size = 1,
-		max_size = 30,
+		max_size = 40,
 	},
 })
 end
 
 if ropes.woodRopeBoxMaxMultiple > 0 then
 loot.register_loot({
-	weights = { generic = 200 },
+	weights = { generic = 100 },
 	payload = {
 		stack = ItemStack("ropes:wood1rope_block"),
 		min_size = 1,
@@ -35,7 +35,7 @@ end
 
 if ropes.copperRopeBoxMaxMultiple > 0 then
 loot.register_loot({
-	weights = { generic = 100 },
+	weights = { generic = 75 },
 	payload = {
 		stack = ItemStack("ropes:copper1rope_block"),
 		min_size = 1,
