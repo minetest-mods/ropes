@@ -290,7 +290,7 @@ minetest.register_node("ropes:rope_bottom", rope_bottom_def)
 if ropes.woodRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
 	if ropes.woodRopeBoxMaxMultiple > 0 then
 		minetest.register_craft({
-			output = "ropes:1rope_block",
+			output = "ropes:wood1rope_block",
 			recipe =  {
 				{'group:wood'},
 				{'group:vines'}
@@ -307,7 +307,7 @@ end
 if ropes.copperRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
 	if ropes.copperRopeBoxMaxMultiple > 0 then
 		minetest.register_craft({
-			output = "ropes:1rope_block",
+			output = "ropes:copper1rope_block",
 			recipe =  {
 				{'default:copper_ingot'},
 				{'group:vines'}
@@ -324,7 +324,7 @@ end
 if ropes.steelRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
 	if ropes.steelRopeBoxMaxMultiple > 0 then
 		minetest.register_craft({
-			output = "ropes:1rope_block",
+			output = "ropes:steel1rope_block",
 			recipe =  {
 				{'default:steel_ingot'},
 				{'group:vines'}
