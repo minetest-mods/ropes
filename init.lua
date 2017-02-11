@@ -6,39 +6,19 @@ ropes = {
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
-ropes.ropeLength = tonumber(minetest.setting_get("ropes_rope_length"))
-if not ropes.ropeLength then
-	ropes.ropeLength = 50
-end
-
-ropes.ropeLadderLength = tonumber(minetest.setting_get("ropes_rope_ladder_length"))
-if not ropes.ropeLadderLength then
-	ropes.ropeLadderLength = 50
-end
-
-ropes.woodRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_wood_rope_box_max_multiple"))
-if not ropes.woodRopeBoxMaxMultiple then
-	ropes.woodRopeBoxMaxMultiple = 2
-end
-
-ropes.copperRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_copper_rope_box_max_multiple"))
-if not ropes.copperRopeBoxMaxMultiple then
-	ropes.copperRopeBoxMaxMultiple = 5
-end
-
-ropes.steelRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_steel_rope_box_max_multiple"))
-if not ropes.steelRopeBoxMaxMultiple then
-	ropes.steelRopeBoxMaxMultiple = 9
-end
-
+ropes.ropeLength = tonumber(minetest.setting_get("ropes_rope_length")) or 50
+ropes.ropeLadderLength = tonumber(minetest.setting_get("ropes_rope_ladder_length")) or 50
+ropes.woodRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_wood_rope_box_max_multiple")) or 2
+ropes.copperRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_copper_rope_box_max_multiple")) or 5
+ropes.steelRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_steel_rope_box_max_multiple")) or 9
 ropes.create_all_definitions = minetest.setting_getbool("ropes_create_all_definitions")
-
 
 dofile( minetest.get_modpath( ropes.name ) .. "/doc.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/functions.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/crafts.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/ropeboxes.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/ladder.lua" )
+dofile( minetest.get_modpath( ropes.name ) .. "/loot.lua" )
 
 local upgrade_counter = 1
 -- For players who used to use the combined vine/rope mod fork I split this out of
