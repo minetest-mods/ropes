@@ -226,6 +226,11 @@ local rope_def = {
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds =  default.node_sound_leaves_defaults(),
+	sounds = {
+            footstep = "ropes_creak",
+            dig = "__group",
+            dug = "__group",
+	},
 	drawtype = "nodebox",
 	node_box = {
 		type = "connected",
@@ -256,7 +261,11 @@ local rope_bottom_def = {
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	drawtype = "nodebox",
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
-	sounds =  default.node_sound_leaves_defaults(),
+	sounds = {
+            footstep = "ropes_creak",
+            dig = "__group",
+            dug = "__group",
+	},
 	node_box = {
 		type = "connected",
 		fixed = {
