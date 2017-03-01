@@ -36,7 +36,7 @@ minetest.register_alias("vines:rope_block", "ropes:steel5rope_block")
 for i=1,9 do
 	minetest.register_alias(string.format("ropes:%irope_block", i), string.format("ropes:steel%irope_block", i))
 end
-minetest.register_alias("castle:ropes", "ropes:ropesegment")
+minetest.register_alias("castle:ropes", "ropes:rope")
 minetest.register_alias("castle:ropebox", "ropes:steel1rope_block")
 minetest.register_alias("castle:box_rope", "ropes:rope")
 
