@@ -20,33 +20,24 @@ dofile( minetest.get_modpath( ropes.name ) .. "/ropeboxes.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/ladder.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/loot.lua" )
 
-local upgrade_counter = 1
--- For players who used to use the combined vine/rope mod fork I split this out of
-local swapper = function(old_node, new_node, upgrade_name)
-	minetest.register_lbm({
-		name = "ropes:" .. upgrade_name .. "_" .. tostring(upgrade_counter),
-		nodenames = {old_node},
-		action = function(pos, node)
-			minetest.swap_node(pos, {name=new_node, param2=node.param2})
-		end
-	})
-	upgrade_counter = upgrade_counter + 1
-end
-for i=1,5 do
-	swapper(string.format("vines:%irope_block", i), string.format("ropes:%irope_block", i), "vines_to_ropes_upgrade")
-end
-swapper("vines:rope", "ropes:rope", "vines_to_ropes_upgrade")
-swapper("vines:rope_bottom", "ropes:rope_bottom", "vines_to_ropes_upgrade")
-swapper("vines:rope_end", "ropes:rope_bottom", "vines_to_ropes_upgrade")
-swapper("vines:rope_top", "ropes:rope_top", "vines_to_ropes_upgrade")
-swapper("vines:ropeladder_top", "ropes:ropeladder_top", "vines_to_ropes_upgrade")
-swapper("vines:ropeladder", "ropes:ropeladder", "vines_to_ropes_upgrade")
-swapper("vines:ropeladder_bottom", "ropes:ropeladder_bottom", "vines_to_ropes_upgrade")
-swapper("vines:ropeladder_falling", "ropes:ropeladder_falling", "vines_to_ropes_upgrade")
-swapper("vines:rope_block", "ropes:5rope_block", "vines_to_ropes_upgrade") -- for the original vines mod
 
-for i=1,9 do
-	swapper(string.format("ropes:%irope_block", i), string.format("ropes:steel%irope_block", i), "rope_block_composition_upgrade")
+for i=1,5 do
+	minetest.register_alias(string.format("vines:%irope_block", i), string.format("ropes:%irope_block", i))
 end
+minetest.register_alias("vines:rope", "ropes:rope")
+minetest.register_alias("vines:rope_bottom", "ropes:rope_bottom")
+minetest.register_alias("vines:rope_end", "ropes:rope_bottom")
+minetest.register_alias("vines:rope_top", "ropes:rope_top")
+minetest.register_alias("vines:ropeladder_top", "ropes:ropeladder_top")
+minetest.register_alias("vines:ropeladder", "ropes:ropeladder")
+minetest.register_alias("vines:ropeladder_bottom", "ropes:ropeladder_bottom")
+minetest.register_alias("vines:ropeladder_falling", "ropes:ropeladder_falling")
+minetest.register_alias("vines:rope_block", "ropes:steel5rope_block")
+for i=1,9 do
+	minetest.register_alias(string.format("ropes:%irope_block", i), string.format("ropes:steel%irope_block", i))
+end
+minetest.register_alias("castle:ropes", "ropes:ropesegment")
+minetest.register_alias("castle:ropebox", "ropes:steel1rope_block")
+minetest.register_alias("castle:box_rope", "ropes:rope")
 
 print(S("[Ropes] Loaded!"))
