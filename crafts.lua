@@ -3,17 +3,26 @@ local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
 if minetest.get_modpath("farming") then
-	local old_def = minetest.registered_craftitems["farming:cotton"]
-	if old_def then
-		old_def.groups["thread"] = 1
-		minetest.override_item("farming:cotton", {
-			groups = old_def.groups
-		})
-	end
+-- this doesn't work reliably due to side effects of https://github.com/minetest/minetest/issues/5518
+--	local old_def = minetest.registered_craftitems["farming:cotton"]
+--	if old_def then
+--		old_def.groups["thread"] = 1
+--		minetest.override_item("farming:cotton", {
+--			groups = old_def.groups
+--		})
+--	end
+	minetest.register_craft({
+		output = 'ropes:ropesegment',
+		recipe = {
+			{'farming:cotton','farming:cotton'},
+			{'farming:cotton','farming:cotton'},
+			{'farming:cotton','farming:cotton'},
+		}
+	})
 end
 
 minetest.register_craft({
-	output =  'ropes:ropesegment',
+	output = 'ropes:ropesegment',
 	recipe = {
 		{'group:thread','group:thread'},
 		{'group:thread','group:thread'},
