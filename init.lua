@@ -12,13 +12,17 @@ ropes.woodRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_wood_rope_b
 ropes.copperRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_copper_rope_box_max_multiple")) or 5
 ropes.steelRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_steel_rope_box_max_multiple")) or 9
 ropes.create_all_definitions = minetest.settings:get_bool("ropes_create_all_definitions")
+ropes.extending_ladder_enabled = minetest.settings:get_bool("ropes_extending_ladder_enabled")
+ropes.extending_wood_ladder_limit = tonumber(minetest.settings:get("ropes_extending_wood_ladder_limit")) or 5
+ropes.extending_steel_ladder_limit = tonumber(minetest.settings:get("ropes_extending_steel_ladder_limit")) or 15
 
-dofile( minetest.get_modpath( ropes.name ) .. "/doc.lua" )
-dofile( minetest.get_modpath( ropes.name ) .. "/functions.lua" )
-dofile( minetest.get_modpath( ropes.name ) .. "/crafts.lua" )
-dofile( minetest.get_modpath( ropes.name ) .. "/ropeboxes.lua" )
-dofile( minetest.get_modpath( ropes.name ) .. "/ladder.lua" )
-dofile( minetest.get_modpath( ropes.name ) .. "/loot.lua" )
+dofile( MP .. "/doc.lua" )
+dofile( MP .. "/functions.lua" )
+dofile( MP .. "/crafts.lua" )
+dofile( MP .. "/ropeboxes.lua" )
+dofile( MP .. "/ropeladder.lua" )
+dofile( MP .. "/extendingladder.lua" )
+dofile( MP .. "/loot.lua" )
 
 
 for i=1,5 do
@@ -40,4 +44,4 @@ minetest.register_alias("castle:ropes", "ropes:rope")
 minetest.register_alias("castle:ropebox", "ropes:steel1rope_block")
 minetest.register_alias("castle:box_rope", "ropes:rope")
 
-print(S("[Ropes] Loaded!"))
+print("[Ropes] Loaded!")
