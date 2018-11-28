@@ -41,6 +41,10 @@ ropes_create_all_definitions (Create all rope box definitions) bool false
 #A ladder can extend to its unsupported limit before needing another node
 #behind it to provide a new point of support. Right-clicking on an existing
 #ladder with a stack of ladders will add new ladder segments to its top.
-ropes_extending_ladder_enabled (Enable extendable ladders) bool false
+ropes_extending_ladder_enabled (Enable extendable ladders) bool true
 ropes_extending_wood_ladder_limit (Unsupported limit of wooden ladders) int 5
 ropes_extending_steel_ladder_limit (Unsupported limit of steel ladders) int 15
+
+#These nodes make it easier to build bridges by extending out away
+#from the player as they're placed
+ropes_bridges_enabled (Enable bridges) bool true

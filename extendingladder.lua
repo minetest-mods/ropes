@@ -8,13 +8,22 @@ minetest.unregister_item("default:ladder_steel")
 minetest.clear_craft({output = "default:ladder_wood"})
 minetest.clear_craft({output = "default:ladder_steel"})
 
+local wallmounted_to_facedir =
+{[0] = 15, -- ceiling
+[1] = 13, -- floor
+[2] = 1, -- +X
+[3] = 3, -- -X
+[4] = 0, -- +Z
+[5] = 2, -- -Z
+}
+
 minetest.register_lbm({
     label = "Switch from wallmounted default ladders to rope mod extending ladders",
     name = "ropes:wallmounted_ladder_to_facedir_ladder",
     nodenames = {"default:ladder_wood", "default:ladder_steel"},
     run_at_every_load = false,
     action = function(pos, node)
-		local new_node = {param2=minetest.dir_to_facedir(minetest.wallmounted_to_dir(node.param2))}
+		local new_node = {param2 = wallmounted_to_facedir[node.param2]}
 		if (node.name == "default:ladder_wood") then
 			new_node.name = "ropes:ladder_wood"
 		else
@@ -76,7 +85,7 @@ local ladder_extender = function(pos, node, clicker, itemstack, pointed_thing, l
 			if behind_pos.y > target_height then
 				if minetest.is_protected(pos, clicker:get_player_name()) then
 					minetest.record_protection_violation(clicker:get_player_name())
-				else		
+				else
 					minetest.set_node(pos, {name=ladder_node, param2=param2})
 					if not minetest.settings:get_bool("creative_mode") then
 						clicked_stack:take_item(1)
@@ -94,10 +103,9 @@ minetest.register_node("ropes:ladder_wood", {
 	description = S("Wooden Ladder"),
 	_doc_items_longdesc = ropes.doc.ladder_longdesc,
 	_doc_items_usagehelp = ropes.doc.ladder_usagehelp,
-	drawtype = "signlike",
-	tiles = {"default_wood.png","default_wood.png","default_wood.png^[transformR270","default_wood.png^[transformR270","ropes_ladder_wood.png"},
-	inventory_image = "ropes_ladder_wood.png",
-	wield_image = "ropes_ladder_wood.png",
+	tiles = {"default_wood.png","default_wood.png","default_wood.png^[transformR270","default_wood.png^[transformR270","default_ladder_wood.png"},
+	inventory_image = "default_ladder_wood.png",
+	wield_image = "default_ladder_wood.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
@@ -109,12 +117,12 @@ minetest.register_node("ropes:ladder_wood", {
 	node_box = {
 		type = "fixed",
 		fixed = {
-			{-0.375, -0.5, 0.3125, -0.1875, 0.5, 0.5}, -- Upright1
-			{0.1875, -0.5, 0.3125, 0.375, 0.5, 0.5}, -- Upright2
-			{-0.4375, 0.3125, 0.375, 0.4375, 0.4375, 0.5}, -- Rung_4
-			{-0.4375, -0.1875, 0.375, 0.4375, -0.0625, 0.5}, -- Rung_2
-			{-0.4375, -0.4375, 0.375, 0.4375, -0.3125, 0.5}, -- Rung_1
-			{-0.4375, 0.0625, 0.375, 0.4375, 0.1875, 0.5}, -- Rung_3
+			{-0.375, -0.5, 0.375, -0.25, 0.5, 0.5}, -- Upright1
+			{0.25, -0.5, 0.375, 0.375, 0.5, 0.5}, -- Upright2
+			{-0.4375, 0.3125, 0.4375, 0.4375, 0.4375, 0.5}, -- Rung_4
+			{-0.4375, -0.1875, 0.4375, 0.4375, -0.0625, 0.5}, -- Rung_2
+			{-0.4375, -0.4375, 0.4375, 0.4375, -0.3125, 0.5}, -- Rung_1
+			{-0.4375, 0.0625, 0.4375, 0.4375, 0.1875, 0.5}, -- Rung_3
 		}
 	},
 	groups = {choppy = 2, oddly_breakable_by_hand = 3, flammable = 2, flow_through = 1},
@@ -128,10 +136,9 @@ minetest.register_node("ropes:ladder_steel", {
 	description = S("Steel Ladder"),
 	_doc_items_longdesc = ropes.doc.ladder_longdesc,
 	_doc_items_usagehelp = ropes.doc.ladder_usagehelp,
-	drawtype = "signlike",
-	tiles = {"default_steel_block.png","default_steel_block.png","default_steel_block.png","default_steel_block.png","ropes_ladder_steel.png"},
-	inventory_image = "ropes_ladder_steel.png",
-	wield_image = "ropes_ladder_steel.png",
+	tiles = {"default_steel_block.png","default_steel_block.png","default_steel_block.png","default_steel_block.png","default_ladder_steel.png"},
+	inventory_image = "default_ladder_steel.png",
+	wield_image = "default_ladder_steel.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
@@ -159,13 +166,32 @@ minetest.register_node("ropes:ladder_steel", {
 
 else
 
+-- Table of possible wallmounted values
+local facedir_to_wallmounted = {
+	4, -- +Z
+	2, -- +X
+	5, -- -Z
+	3, -- -X
+	1, -- -Y
+	0, -- +Y
+}
+-- Mapping from facedir value to index in facedir_to_dir.
+local facedir_to_wallmounted_map = {
+	[0]=1, 2, 3, 4,
+	5, 2, 6, 4,
+	6, 2, 5, 4,
+	1, 5, 3, 6,
+	1, 6, 3, 5,
+	1, 4, 3, 2,
+}
+
 minetest.register_lbm({
     label = "Switch from ropes ladders to wallmounted default ladders",
     name = "ropes:facedir_ladder_to_wallmounted_ladder",
     nodenames = {"ropes:ladder_wood", "ropes:ladder_steel"},
     run_at_every_load = false,
     action = function(pos, node)
-		local new_node = {param2=minetest.dir_to_wallmounted(minetest.facedir_to_dir(node.param2))}
+		local new_node = {param2 = facedir_to_wallmounted[facedir_to_wallmounted_map[node.param2 % 32]]}
 		if (node.name == "ropes:ladder_wood") then
 			new_node.name = "default:ladder_wood"
 		else

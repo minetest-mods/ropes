@@ -43,7 +43,10 @@ if ropes.extending_ladder_enabled then
 	ropes.doc.ladder_longdesc = S("A ladder for climbing. It can reach greater heights when placed against a supporting block.")
 	ropes.doc.ladder_usagehelp = S("Right-clicking on a ladder with a stack of identical ladder items will automatically add new ladder segments to the top, provided it hasn't extended too far up beyond the last block behind it providing support.")
 end
-	
+
+ropes.doc.wooden_bridge_longdesc = S("A wooden platform with support struts useful for bridging gaps.")
+ropes.doc.wooden_bridge_usagehelp = S("This behaves like most structural blocks except in one circumstance: when placed on top of a block with buildable space on the side facing away from you, this block will not be built on top but instead will extend out from that far side of the target block. This allows a platform to be easily built that juts out away from the location you're standing on.")
+
 doc.add_entry_alias("nodes", "ropes:ropeladder_top", "nodes", "ropes:ropeladder")
 doc.add_entry_alias("nodes", "ropes:ropeladder_top", "nodes", "ropes:ropeladder_bottom")
 doc.add_entry_alias("nodes", "ropes:ropeladder_top", "nodes", "ropes:ropeladder_falling")

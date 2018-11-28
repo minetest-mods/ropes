@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 01:00-0700\n"
+"POT-Creation-Date: 2018-11-27 22:45-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: bridge.lua:47
+msgid "Wooden Bridge"
+msgstr ""
 
 #: crafts.lua:54
 msgid "Rope Segment"
@@ -130,11 +134,24 @@ msgid ""
 "extended too far up beyond the last block behind it providing support."
 msgstr ""
 
-#: extendingladder.lua:94
+#: doc.lua:47
+msgid "A wooden platform with support struts useful for bridging gaps."
+msgstr ""
+
+#: doc.lua:48
+msgid ""
+"This behaves like most structural blocks except in one circumstance: when "
+"placed on top of a block with buildable space on the side facing away from "
+"you, this block will not be built on top but instead will extend out from "
+"that far side of the target block. This allows a platform to be easily built "
+"that juts out away from the location you're standing on."
+msgstr ""
+
+#: extendingladder.lua:103
 msgid "Wooden Ladder"
 msgstr ""
 
-#: extendingladder.lua:128
+#: extendingladder.lua:136
 msgid "Steel Ladder"
 msgstr ""
 
