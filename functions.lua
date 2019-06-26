@@ -9,16 +9,19 @@ ropes.make_rope_on_timer = function(rope_node_name)
 		local oldnode = minetest.get_node(pos)
 		if currentlength > 1 and (not minetest.is_protected(newpos, placer_name)
 		or minetest.check_player_privs(placer_name, "protection_bypass")) then
-			if  newnode.name == "air" then
-				minetest.add_node(newpos, {name=currentend.name, param2=oldnode.param2})
-				local newmeta = minetest.get_meta(newpos)
-				newmeta:set_int("length_remaining", currentlength-1)
-				newmeta:set_string("placer", placer_name)
-				minetest.set_node(pos, {name=rope_node_name, param2=oldnode.param2})
-				ropes.move_players_down(pos, 1)
-			else
-				local timer = minetest.get_node_timer( pos )
-				timer:start( 1 )
+			for _, node_extend in pairs(ropes.rope_extends_into_nodes) do
+				if  newnode.name == node_extend then
+					minetest.add_node(newpos, {name=currentend.name, param2=oldnode.param2})
+					local newmeta = minetest.get_meta(newpos)
+					newmeta:set_int("length_remaining", currentlength-1)
+					newmeta:set_string("placer", placer_name)
+					minetest.set_node(pos, {name=rope_node_name, param2=oldnode.param2})
+					ropes.move_players_down(pos, 1)
+					break
+				else
+					local timer = minetest.get_node_timer( pos )
+					timer:start( 1 )
+				end
 			end
 		end
 	end
