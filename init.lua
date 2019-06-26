@@ -28,6 +28,12 @@ if ropes.bridges_enabled == nil then
 	ropes.bridges_enabled = true
 end
 
+ropes.rope_extends_into_nodes = { "air" }
+
+if minetest.get_modpath("nether") then
+   table.insert(ropes.rope_extends_into_nodes, "nether:fumes")
+end
+
 dofile( MP .. "/doc.lua" )
 dofile( MP .. "/functions.lua" )
 dofile( MP .. "/crafts.lua" )
