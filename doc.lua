@@ -4,9 +4,7 @@ if not minetest.get_modpath("doc") then
 	return
 end
 
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = ropes.S
 
 ropes.doc.ropesegment_longdesc = S("Rope segments are bundles of fibre twisted into robust cables.")
 ropes.doc.ropesegment_usage = S("This craft item is useful for creating rope ladders, or for spooling on wooden spindles to hang and climb upon.")
