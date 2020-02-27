@@ -23,7 +23,7 @@ After a rope ladder is placed on a vertical wall it will begin extending downwar
 
 Right-clicking on a ladder with a stack of identical ladder items will automatically add new ladder segments to the top, provided it hasn't extended too far up beyond the last block behind it providing support.=
 
-Rope boxes have a certain amount of rope contained within them specified in the name of the node, and have a limit to how much rope they can support that depends on the material they're made of. The different lengths can be crafted by combining and splitting up rope boxes in the crafting grid. For example, you can craft a @1m rope box by putting a @2m rope box and a rope segment in the crafting grid, or a @3m rope box and two rope segments in the crafting grid. Two rope segments can be recovered by putting the @1m rope box in the crafting grid by itself.=
+Rope boxes have a certain amount of rope contained within them specified in the name of the node, and have a limit to how much rope they can support that depends on the material they're made of. The different lengths can be crafted by combining and splitting up rope boxes in the crafting grid. For example, you can craft a @1m rope box by putting a @2m rope box and a rope segment in the crafting grid, or a @3m rope box and two rope segments in the crafting grid. Two rope segments can be recovered by putting the @4m rope box in the crafting grid by itself.=
 
 Rope segments are bundles of fibre twisted into robust cables.=
 
