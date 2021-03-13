@@ -126,6 +126,7 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 		walkable = false,
 		climbable = true,
 		tiles = rope_box_tiles(rope_box_data[multiple].tiles, tint),
+		use_texture_alpha = "clip",
 		node_box = {
 			type = "fixed",
 			fixed = rope_box_data[multiple].node
@@ -234,6 +235,7 @@ local rope_def = {
 	paramtype = "light",
 	drop = "",
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
+	use_texture_alpha = "clip",
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds = {
             footstep = {name = "ropes_creak", gain = 0.8, max_hear_distance = 6},
@@ -268,6 +270,7 @@ local rope_bottom_def = {
 	paramtype = "light",
 	drop = "",
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
+	use_texture_alpha = "clip",
 	drawtype = "nodebox",
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds = {
