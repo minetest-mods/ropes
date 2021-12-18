@@ -111,7 +111,7 @@ local ladder_extender = function(pos, node, clicker, itemstack, pointed_thing, l
 			-- If there's enough support, build a new ladder segment
 			if behind_pos.y > target_height then
 				if minetest.is_protected(pos, clicker:get_player_name()) then
-					minetest.record_protection_violation(clicker:get_player_name())
+					minetest.record_protection_violation(pos, clicker:get_player_name())
 				else
 					minetest.set_node(pos, {name=ladder_node, param2=param2})
 					if not minetest.settings:get_bool("creative_mode") then
