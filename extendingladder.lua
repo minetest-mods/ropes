@@ -3,9 +3,9 @@ local S = ropes.S
 if ropes.extending_ladder_enabled then
 
 local wood_recipe = {
+		{"group:stick", "", "group:stick"},
+		{"group:stick", "", "group:stick"},
 		{"group:stick", "group:stick", "group:stick"},
-		{"group:stick", "", "group:stick"},
-		{"group:stick", "", "group:stick"},
 	}
 local wood_name = S("Wooden Extendable Ladder")
 
