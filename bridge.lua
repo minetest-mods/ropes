@@ -9,10 +9,10 @@ local bridge_on_place = function(itemstack, placer, pointed_thing)
 	if placer == nil then
 		return minetest.item_place(itemstack, placer, pointed_thing)
 	end
-	
+
 	local above = pointed_thing.above
 	local under = pointed_thing.under
-	
+
 	if above.x == under.x and above.z == under.z and above.y > under.y then
 		-- we're aimed downward at a buildable node from above.
 		-- determine the direction the placer lies relative to this node.
@@ -26,21 +26,21 @@ local bridge_on_place = function(itemstack, placer, pointed_thing)
 				new_under.x = under.x - 1
 			else
 				new_under.x = under.x + 1
-			end				
+			end
 		else
 			-- placer is displaced along the Z axis relative to the target
 			if diff_z > 0 then
 				new_under.z = under.z - 1
 			else
 				new_under.z = under.z + 1
-			end	
+			end
 		end
 		if minetest.registered_nodes[minetest.get_node(new_under).name].buildable_to then
 			local new_pointed_thing = {type="node", under=new_under, above={x=new_under.x, y=new_under.y+1, z=new_under.z}}
 			return minetest.item_place(itemstack, placer, new_pointed_thing)
 		end
 	end
-	
+
 	return minetest.item_place(itemstack, placer, pointed_thing)
 end
 
@@ -56,6 +56,7 @@ minetest.register_node("ropes:wood_bridge", {
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	groups = {choppy = 2, flammable = 2, oddly_breakable_by_hand = 1, flow_through = 1, fence = 1, wall = 1},
 	sounds = default.node_sound_wood_defaults(),
 	node_box = {
