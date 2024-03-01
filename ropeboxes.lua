@@ -24,7 +24,7 @@ local rope_box_data = {
 	--selection = {-0.1875, -0.5, -0.25, 0.1875, 0.25, 0.25}, -- selection
 	tiles = 1,
 },
-{	
+{
 	node={
 		{-0.1875, -0.125, -0.25, 0.1875, 0.125, 0.25}, -- pulley
 		{-0.1875, -0.25, -0.125, 0.1875, 0.25, 0.125}, -- pulley
@@ -35,7 +35,7 @@ local rope_box_data = {
 	--selection = {-0.1875, -0.5, -0.25, 0.1875, 0.25, 0.25}, -- selection
 	tiles = 2,
 },
-{	
+{
 	node={
 		{-0.25, -0.125, -0.25, 0.25, 0.125, 0.25}, -- pulley
 		{-0.25, -0.25, -0.125, 0.25, 0.25, 0.125}, -- pulley
@@ -46,7 +46,7 @@ local rope_box_data = {
 	--selection = {-0.3125, -0.5, -0.25, 0.3125, 0.25, 0.25}, -- selection
 	tiles = 3,
 },
-{	
+{
 	node={
 		{-0.3125, -0.125, -0.25, 0.3125, 0.125, 0.25}, -- pulley
 		{-0.3125, -0.25, -0.125, 0.3125, 0.25, 0.125}, -- pulley
@@ -57,7 +57,7 @@ local rope_box_data = {
 	--selection = {-0.375, -0.5, -0.25, 0.375, 0.25, 0.25}, -- selection
 	tiles = 4,
 },
-{	
+{
 	node={
 		{-0.375, -0.125, -0.25, 0.375, 0.125, 0.25}, -- pulley
 		{-0.375, -0.25, -0.125, 0.375, 0.25, 0.125}, -- pulley
@@ -79,7 +79,7 @@ local rope_box_data = {
 	--selection = {-0.1875, -0.5, -0.3125, 0.1875, 0.3125, 0.3125}, -- selection
 	tiles = 2,
 },
-{	
+{
 	node={
 		{-0.25, -0.1875, -0.3125, 0.25, 0.1875, 0.3125}, -- pulley
 		{-0.25, -0.3125, -0.1875, 0.25, 0.3125, 0.1875}, -- pulley
@@ -90,7 +90,7 @@ local rope_box_data = {
 	--selection = {-0.3125, -0.5, -0.3125, 0.3125, 0.3125, 0.3125}, -- selection
 	tiles = 3,
 },
-{	
+{
 	node={
 		{-0.3125, -0.1875, -0.3125, 0.3125, 0.1875, 0.3125}, -- pulley
 		{-0.3125, -0.3125, -0.1875, 0.3125, 0.3125, 0.1875}, -- pulley
@@ -101,7 +101,7 @@ local rope_box_data = {
 	--selection = {-0.375, -0.5, -0.3125, 0.375, 0.3125, 0.3125}, -- selection
 	tiles = 4,
 },
-{	
+{
 	node={
 		{-0.375, -0.1875, -0.3125, 0.375, 0.1875, 0.3125}, -- pulley
 		{-0.375, -0.3125, -0.1875, 0.375, 0.3125, 0.1875}, -- pulley
@@ -127,6 +127,7 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 		climbable = true,
 		tiles = rope_box_tiles(rope_box_data[multiple].tiles, tint),
 		use_texture_alpha = "clip",
+		is_ground_content = false,
 		node_box = {
 			type = "fixed",
 			fixed = rope_box_data[multiple].node
@@ -134,7 +135,7 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 		selection_box = {type="regular"},
 		collision_box = {type="regular"},
 		groups = {attached_node = 1, choppy=2, oddly_breakable_by_hand=1, rope_block = 1},
-		
+
 		on_place = function(itemstack, placer, pointed_thing)
 			if pointed_thing.type == "node" then
 				local target_node = minetest.get_node(pointed_thing.under)
@@ -145,15 +146,15 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 			end
 			return minetest.item_place(itemstack, placer, pointed_thing)
 		end,
-	
+
 		after_place_node = function(pos, placer)
 			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 			local placer_name = placer:get_player_name()
-			
+
 			if minetest.is_protected(pos_below, placer_name) and not minetest.check_player_privs(placer, "protection_bypass") then
 				return
 			end
-		
+
 			local node_below = minetest.get_node(pos_below)
 			if ropes.can_place_rope_in_node(node_below.name) then
 				minetest.add_node(pos_below, {name="ropes:rope_bottom"})
@@ -162,13 +163,13 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 				meta:set_string("placer", placer:get_player_name())
 			end
 		end,
-		
+
 		after_destruct = function(pos)
 			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
 			ropes.destroy_rope(pos_below, {'ropes:rope', 'ropes:rope_bottom'})
 		end
-	}	
-	
+	}
+
 	-- If this number is higher than permitted, we still want to register the block (in case
 	-- some were already placed in-world) but we want to hide it from creative inventory
 	-- and if someone digs it we want to disintegrate it into its component parts to prevent
@@ -177,19 +178,19 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 		rope_block_def.groups.not_in_creative_inventory = 1
 		rope_block_def.drop = string.format("ropes:%s1rope_block %i", node_prefix, multiple)
 	end
-	
+
 	if flammable then
 		rope_block_def.groups.flammable = flammable
-		
+
 		minetest.register_craft({
 			type = "fuel",
 			recipe = node_name,
 			burntime = ropes.rope_burn_time * multiple + ropes.wood_burn_time,
 		})
 	end
-	
+
 	minetest.register_node(node_name, rope_block_def)
-	
+
 	if (multiple ~= 1) then
 		-- Only register a recipe to craft this if it's within the permitted multiple range
 		if multiple <= max_multiple then
@@ -205,7 +206,7 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 				})
 			end
 		end
-	
+
 		-- Always allow players to disintegrate this into component parts, in case
 		-- there were some in inventory and the setting was changed.
 		minetest.register_craft({
@@ -219,7 +220,7 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 			},
 		})
 	end
-	
+
 	if minetest.get_modpath("doc") then
 		doc.add_entry_alias("nodes", "ropes:rope", "nodes", node_name)
 	end
@@ -236,6 +237,7 @@ local rope_def = {
 	drop = "",
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	use_texture_alpha = "clip",
+	is_ground_content = false,
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds = {
             footstep = {name = "ropes_creak", gain = 0.8, max_hear_distance = 6},
@@ -271,6 +273,7 @@ local rope_bottom_def = {
 	drop = "",
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	use_texture_alpha = "clip",
+	is_ground_content = false,
 	drawtype = "nodebox",
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds = {
@@ -292,14 +295,14 @@ local rope_bottom_def = {
 		type = "fixed",
 		fixed = {-1/8, -1/2, -1/8, 1/8, 1/2, 1/8},
 	},
-	
+
 	on_construct = function( pos )
 		local timer = minetest.get_node_timer( pos )
 		timer:start( 1 )
 	end,
-	
+
 	on_timer = rope_extension_timer,
-	
+
     after_destruct = function(pos)
 		ropes.hanging_after_destruct(pos, "ropes:rope_top", "ropes:rope", "ropes:rope_bottom")
 	end,
