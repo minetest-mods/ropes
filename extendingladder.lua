@@ -16,6 +16,7 @@ local steel_recipe = {
 	}
 local steel_name = S("Steel Extendable Ladder")
 
+-- Overlay texture: by 1F616EMO, CC0 <https://creativecommons.org/publicdomain/zero/1.0/>
 local texture_overlay = "^ropes_ropeladder_overlay.png"
 
 if ropes.replace_default_ladders then
