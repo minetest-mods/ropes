@@ -16,6 +16,8 @@ local steel_recipe = {
 	}
 local steel_name = S("Steel Extendable Ladder")
 
+local texture_overlay = "^ropes_ropeladder_overlay.png"
+
 if ropes.replace_default_ladders then
 
 minetest.unregister_item("default:ladder_wood")
@@ -61,6 +63,8 @@ steel_recipe = {
 		{'default:steel_ingot', '', 'default:steel_ingot'},
 	}
 steel_name = S("Steel Ladder")
+
+texture_overlay = ""
 
 end
 
@@ -132,7 +136,7 @@ minetest.register_node("ropes:ladder_wood", {
 	_doc_items_usagehelp = ropes.doc.ladder_usagehelp,
 	tiles = {"default_wood.png","default_wood.png","default_wood.png^[transformR270","default_wood.png^[transformR270","default_ladder_wood.png"},
 	use_texture_alpha = "clip",
-	inventory_image = "default_ladder_wood.png",
+	inventory_image = "default_ladder_wood.png" .. texture_overlay,
 	wield_image = "default_ladder_wood.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -166,7 +170,7 @@ minetest.register_node("ropes:ladder_steel", {
 	_doc_items_usagehelp = ropes.doc.ladder_usagehelp,
 	tiles = {"default_steel_block.png","default_steel_block.png","default_steel_block.png","default_steel_block.png","default_ladder_steel.png"},
 	use_texture_alpha = "clip",
-	inventory_image = "default_ladder_steel.png",
+	inventory_image = "default_ladder_steel.png" .. texture_overlay,
 	wield_image = "default_ladder_steel.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
