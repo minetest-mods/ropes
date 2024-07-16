@@ -17,6 +17,16 @@ if minetest.get_modpath("farming") then
 			{'farming:cotton','farming:cotton'},
 		}
 	})
+
+	if farming.mod == "redo" or farming.mod == "undo" then
+		minetest.register_craft({
+			output = 'ropes:ropesegment',
+			recipe = {
+				{'farming:hemp_rope'},
+				{'farming:hemp_rope'},
+			}
+		})
+	end
 end
 
 if minetest.get_modpath("hemp") then
@@ -35,6 +45,17 @@ if minetest.get_modpath("cottages") then
 		recipe = {
 			{'cottages:rope'},
 			{'cottages:rope'},
+		}
+	})
+end
+
+if minetest.get_modpath("moreblocks") then
+	minetest.register_craft({
+		output = 'ropes:ropesegment',
+		recipe = {
+			{'moreblocks:rope','moreblocks:rope'},
+			{'moreblocks:rope','moreblocks:rope'},
+			{'moreblocks:rope','moreblocks:rope'},
 		}
 	})
 end
