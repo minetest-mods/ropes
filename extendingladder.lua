@@ -62,6 +62,19 @@ steel_recipe = {
 	}
 steel_name = S("Steel Ladder")
 
+else
+	-- Swap between normal and extendable ladders
+	minetest.register_craft({
+		type = "shapeless",
+		output = "ropes:ladder_wood",
+		recipe = {"default:ladder_wood"},
+	})
+
+	minetest.register_craft({
+		type = "shapeless",
+		output = "ropes:ladder_steel",
+		recipe = {"default:ladder_steel"},
+	})
 end
 
 minetest.register_craft({
