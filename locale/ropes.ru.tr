@@ -40,7 +40,7 @@ This craft item is useful for creating rope ladders, or for spooling on wooden s
 When a rope box is placed the rope will immediately begin lowering from it at one meter per second. The rope will only descend when its end is in the vicinity of an active player, suspending its journey when no players are nearby, so a long descent may require a player to climb down the rope as it goes. If you are near the bottom end of a rope that's extending you'll be automatically carried down with it. The rope will stop when it encounters and obstruction, but will resume lowering if the obstruction is removed.=Когда вы размещаете ящик с веревкой, веревка немедленно начнет опускаться с него со скоростью один метр в секунду. Веревка будет опускаться только тогда, когда ее конец находится в непосредственной близости от активного игрока, приостанавливая свое движение, когда поблизости нет игроков, поэтому для длительного спуска игроку может потребоваться спускаться по веревке по мере ее движения. Если вы находитесь около нижнего конца удлиняющейся веревки, вы автоматически будете унесены ею вниз. Веревка остановится, когда столкнется с препятствием, но возобновит спуск, если препятствие будет устранено.
 
 rope boxes can hold @1m of rope.=Ящики для веревок вмещают до 1 м веревки.
-rope boxes can hold rope lengths from @1m to @2m.=Ящики для веревок могут вмещать веревки длиной от 1 до 2 метров.
+rope boxes can hold rope lengths from @1m to @2m.=Ящики для веревок могут вмещать веревки длиной от @1 до @2 метров.
 
 ### doc.lua ###
 ### ropeboxes.lua ###
