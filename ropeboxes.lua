@@ -114,7 +114,7 @@ local rope_box_data = {
 }
 }
 
-local function register_rope_block(multiple, max_multiple, name_prefix, node_prefix, tint, flammable)
+local function register_rope_block(multiple, max_multiple, name_prefix, node_prefix, tint, base_material, flammable)
 	local node_name = string.format("ropes:%s%irope_block", node_prefix, multiple)
 	local rope_block_def = {
 		description = S("@1 Ropebox @2m", name_prefix, ropes.ropeLength*multiple),
@@ -186,6 +186,13 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 			type = "fuel",
 			recipe = node_name,
 			burntime = ropes.rope_burn_time * multiple + ropes.wood_burn_time,
+		})
+	else
+		core.register_craft({
+			type = "fuel",
+			recipe = node_name,
+			burntime = ropes.rope_burn_time * multiple,
+			replacements = {{node_name, base_material}}
 		})
 	end
 
@@ -323,7 +330,7 @@ if ropes.woodRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
 	end
 	for i = 1,9 do
 		if ropes.woodRopeBoxMaxMultiple >= i or ropes.create_all_definitions then
-			register_rope_block(i, ropes.woodRopeBoxMaxMultiple, S("Wood"), "wood", "#86683a", 2)
+			register_rope_block(i, ropes.woodRopeBoxMaxMultiple, S("Wood"), "wood", "#86683a", "group:wood", 2)
 		end
 	end
 end
@@ -340,7 +347,7 @@ if ropes.copperRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
 	end
 	for i = 1,9 do
 		if ropes.copperRopeBoxMaxMultiple >= i or ropes.create_all_definitions then
-			register_rope_block(i, ropes.copperRopeBoxMaxMultiple, S("Copper"), "copper", "#c88648")
+			register_rope_block(i, ropes.copperRopeBoxMaxMultiple, S("Copper"), "copper", "#c88648", "default:copper_ingot")
 		end
 	end
 end
@@ -357,7 +364,7 @@ if ropes.steelRopeBoxMaxMultiple > 0 or ropes.create_all_definitions then
 	end
 	for i = 1,9 do
 		if ropes.steelRopeBoxMaxMultiple >= i or ropes.create_all_definitions then
-			register_rope_block(i, ropes.steelRopeBoxMaxMultiple, S("Steel"), "steel", "#ffffff")
+			register_rope_block(i, ropes.steelRopeBoxMaxMultiple, S("Steel"), "steel", "#ffffff", "default:steel_ingot")
 		end
 	end
 end
